@@ -1,3 +1,5 @@
+var pokeapiService = require('./services/pokeapi-service');
+var pokeapiUtils = require('./utils/pokeapi-utils');
 var app = require('./config/custom-express')();
 
 app.listen(3000, () => {
@@ -8,24 +10,20 @@ app.listen(3000, () => {
 app.post('/webhook', (req, res) => {
     console.log(req.body);
 
-    var response = {
-        "fulfillmentText": "This is a text response",
-        "fulfillmentMessages": [
-            {
-                "card": {
-                    "title": "card title",
-                    "subtitle": "card text",
-                    "imageUri": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-                    "buttons": [
-                        {
-                            "text": "Oi gracinha! Este é um teste!",
-                            "postback": "https://assistant.google.com/"
-                        }
-                    ]
-                }
-            }
-        ]
-    };
+    var pokemonName = pokeapiUtils.getNameFromRequest(req.body);
 
-    res.json(response);
+    var response = null;
+
+    pokeapiService
+        .getPokemonInfo(pokemonName)
+        .then((pokemonInfo) => {
+            response = pokeapiUtils.montaResponse(pokemonInfo);
+        })
+        .catch((err) => {
+            response = pokeapiUtils.montaErrorResponse(err);
+        })
+        .finally(() => {
+            console.log(response);
+            res.json(response);
+        });
 });
