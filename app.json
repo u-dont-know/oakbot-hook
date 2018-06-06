@@ -1,0 +1,12 @@
+{
+    "name": "oakbot-hook",
+    "description": "Webhook para conectar chatbot do dialogflow com a pokeapi.",
+    "repository": "https://github.com/paulo-ribeiro/oakbot-hook.git",
+    "keywords": [
+        "pokemons",
+        "prof. oak",
+        "videogame",
+        "cardgame",
+        "nintendo"
+    ]
+}

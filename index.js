@@ -2,7 +2,7 @@ var pokeapiService = require('./services/pokeapi-service');
 var pokeapiUtils = require('./utils/pokeapi-utils');
 var app = require('./config/custom-express')();
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log("\x1b[32m", "Executando em: \nhttp://localhost:3000/");
     console.log("\x1b[0m");
 });
